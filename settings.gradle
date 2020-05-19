@@ -1,0 +1,3 @@
+rootProject.name='MyNet'
+include ':app'
+include ':netlib'
