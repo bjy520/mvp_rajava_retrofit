@@ -1,12 +1,19 @@
 package com.shuaiyu.netlib;
 
 
+
 import com.shuaiyu.netlib.commonRequestInterceotor.CommonRequstInterceptor;
 import com.shuaiyu.netlib.commonRequestInterceotor.CommonResponseInterceptor;
 import com.shuaiyu.netlib.utils.HttpLogginInterceptor;
 
 import java.util.HashMap;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -49,5 +56,15 @@ public class NetApi {
         return builder.build();
     }
 
-
+    public static <T> ObservableTransformer<T, T> applySchedulers (final Observer<T> observer) {
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                Observable<T> observable = upstream. subscribeOn (Schedulers. io()).
+                        observeOn (AndroidSchedulers. mainThread());
+                observable. subscribe (observer) ;
+                return observable ;
+            }
+        };
+    }
 }

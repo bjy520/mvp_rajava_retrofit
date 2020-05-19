@@ -1,5 +1,6 @@
 package com.shuaiyu.mynet;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,20 +25,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("CheckResult")
             @Override
             public void onClick(View v) {
-                NetApi.getService(UserInfoService.class).getWeather("48000d6102193f1d8da193f5a426ccf4","天蝎","狮子").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new BaseObserver<UserInfo>() {
+                NetApi.getService(UserInfoService.class).getWeather("48000d6102193f1d8da193f5a426ccf4","天蝎","狮子").compose(NetApi.applySchedulers(new BaseObserver<UserInfo>() {
+
                     @Override
                     public void Success(UserInfo u) {
-                        Log.e(TAG, "Success: "+new Gson().toJson(u));
+                        Log.e(TAG, "Success: "+new Gson().toJson(u) );
                     }
 
                     @Override
                     public void Error(Throwable e) {
 
                     }
-                });
-            }
-        });
+                }));
+        }
+    });
     }
 }
