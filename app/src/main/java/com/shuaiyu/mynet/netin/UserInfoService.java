@@ -1,7 +1,5 @@
-package com.shuaiyu.netlib;
+package com.shuaiyu.mynet.netin;
 
-
-import com.shuaiyu.netlib.beans.UserInfo;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -13,5 +11,5 @@ import retrofit2.http.Query;
 public interface UserInfoService {
 
     @GET("xzpd/query")
-    Observable<UserInfo> getWeather(@Query("key") String key, @Query("men")String men, @Query("women")String women);
+    Observable<UserInfo> getWeather(@Query("key") String key, @Query("men") String men, @Query("women") String women);
 }

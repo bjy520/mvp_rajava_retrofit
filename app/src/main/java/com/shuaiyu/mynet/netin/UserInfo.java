@@ -1,4 +1,4 @@
-package com.shuaiyu.netlib.beans;
+package com.shuaiyu.mynet.netin;
 
 /**
  * Created by meikai on 2020/05/16.
